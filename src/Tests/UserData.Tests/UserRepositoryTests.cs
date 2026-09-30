@@ -1,5 +1,5 @@
 ﻿using DataUploader.Domain.Interfaces;
-using DataUploader.User.Data.Repositories;
+using UserData;
 
 namespace DataUploader.User.Data.Tests.Repositories
 {

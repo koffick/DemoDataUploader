@@ -1,7 +1,7 @@
 ﻿using DataUploader.Domain.Interfaces;
 using DataUploader.Domain.Models;
 
-namespace DataUploader.User.Data.Repositories
+namespace UserData
 {
     /// <inheritdoc cref="IUserRepository"/>
     public class UserRepository : IUserRepository

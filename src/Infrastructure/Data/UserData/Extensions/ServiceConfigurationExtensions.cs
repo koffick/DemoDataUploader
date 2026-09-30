@@ -1,5 +1,5 @@
 ﻿using DataUploader.Domain.Interfaces;
-using DataUploader.User.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +17,12 @@ namespace UserData.Extensions
         /// <param name="configuration"><inheritdoc cref="IConfiguration"/></param>
         public static void AddUserDataContextDependencies(this IServiceCollection services, IConfiguration configuration)
         {
+            string connection = configuration.GetConnectionString("UserDBConnection");
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(connection, x => x.MigrationsAssembly("UserData"));
+            });
+
             services.AddTransient<IUserRepository, UserRepository>();
         }
     }
