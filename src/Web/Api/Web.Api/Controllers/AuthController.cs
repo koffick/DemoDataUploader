@@ -1,0 +1,53 @@
+﻿using DataUploader.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Web.Api.DTO.Responses;
+using Web.Api.Models;
+
+namespace WebApi.Host.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class AuthController : ControllerBase
+    {
+        private readonly IUserRepository _userRepository;
+
+        public AuthController(IUserRepository userRepository)
+        {
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(ApiFailureResponse), 400)]
+        public IActionResult Login(string login)
+        {
+            try
+            {
+                var userInfo = _userRepository.Find(login);
+                if (userInfo == null)
+                {
+                    var message = $"Пользователь с именем '{login}' в сиситеме не зарегистрирован.";
+                    return BadRequest(new ApiFailureResponse(message));
+                }
+
+                var claims = new List<Claim>() { new Claim(ClaimTypes.Name, userInfo.FullName) };
+                var jwt = new JwtSecurityToken(
+                        issuer: AuthOptions.ISSUER,
+                        audience: AuthOptions.AUDIENCE,
+                        claims: claims,
+                        expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)), // время действия 2 минуты
+                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+
+                return Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
+            }
+            catch (Exception ex)
+            {
+                var message = $"В процессе идентификации произошла непредвиденная ошибка: {ex.Message}";
+                return BadRequest(new ApiFailureResponse(message));
+            }
+        }
+    }
+}

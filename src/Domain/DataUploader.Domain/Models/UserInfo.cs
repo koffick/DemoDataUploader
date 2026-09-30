@@ -1,7 +1,7 @@
 ﻿namespace DataUploader.Domain.Models;
 
 /// <summary>
-/// Информация о ползователе приложения.
+/// Информация о пользователе приложения.
 /// </summary>
 public class UserInfo
 {
