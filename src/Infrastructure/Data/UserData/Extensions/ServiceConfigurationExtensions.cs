@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UserData.Mapper;
 
 namespace UserData.Extensions
 {
@@ -22,6 +23,8 @@ namespace UserData.Extensions
             {
                 options.UseNpgsql(connection, x => x.MigrationsAssembly("UserData"));
             });
+
+            services.AddAutoMapper(cfg => { }, typeof(UserProfile));
 
             services.AddTransient<IUserRepository, UserRepository>();
         }

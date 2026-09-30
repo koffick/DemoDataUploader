@@ -1,21 +1,54 @@
-﻿using DataUploader.Domain.Interfaces;
+﻿using AutoFixture;
+using AutoMapper;
+using DataUploader.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 using UserData;
+using UserData.Mapper;
 
 namespace DataUploader.User.Data.Tests.Repositories
 {
     public class UserRepositoryTests
     {
         private UserRepository _userRepository;
+        private DataContext _dataContext;
 
         public UserRepositoryTests()
         {
-            _userRepository = new UserRepository();
+            var contextOptions = new DbContextOptionsBuilder<DataContext>()
+                .UseInMemoryDatabase("UserRepositoryTest")
+                .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+            .Options;
+
+            _dataContext = new DataContext(contextOptions);
+
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new UserProfile());
+            },
+            new LoggerFactory());
+            var mapper = new AutoMapper.Mapper(configuration);
+
+            _userRepository = new UserRepository(_dataContext, mapper);
         }
 
         [Fact]
         public void IsInstance_True()
         {
             Assert.IsAssignableFrom<IUserRepository>(_userRepository);
+        }
+
+        [Fact]
+        public void Find_Must_Be_Return_User()
+        {
+            var user = new Fixture().Create<UserData.Models.User>();
+            _dataContext.Add(user);
+            _dataContext.SaveChanges();
+
+            var userInfo = _userRepository.Find(user.LoginName);
+            Assert.NotNull(userInfo);
+            Assert.Equal(userInfo.Id, user.Id);
         }
     }
 }
