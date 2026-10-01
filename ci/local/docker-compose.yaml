@@ -39,5 +39,17 @@ services:
     tty: true
     stdin_open: true
 
+  data-downloader-webapi:
+    container_name: webapi
+    build:
+      context: ../..
+      dockerfile: docker/Web.Api.Dockerfile
+    depends_on:
+      data-downloader-postgres:
+        condition: service_healthy
+    ports:
+      - "5100:8080"
+    restart: always
+
 volumes:
   pg_data: null
