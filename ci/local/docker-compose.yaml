@@ -13,7 +13,7 @@ services:
     ports:
       - "5430:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data/pgdata
+      - ./pg_data:/var/lib/postgresql/data/pgdata
     deploy:
       resources:
         limits:
