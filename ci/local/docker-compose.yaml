@@ -38,18 +38,27 @@ services:
     restart: unless-stopped
     tty: true
     stdin_open: true
+    networks:
+      - dd-net
 
   data-downloader-webapi:
     container_name: webapi
     build:
       context: ../..
       dockerfile: docker/Web.Api.Dockerfile
+    environment:
+      ConnectionStrings__UserDBConnection: $WEBAPI_USER_DB_CONNECTION
     depends_on:
       data-downloader-postgres:
         condition: service_healthy
     ports:
       - "5100:8080"
     restart: always
+    networks:
+      - dd-net
 
 volumes:
   pg_data: null
+  
+networks:
+  dd-net:
