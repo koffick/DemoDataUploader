@@ -8,7 +8,7 @@ using System.Security.Claims;
 using Web.Api.Models;
 using WebApi.Host.Controllers;
 
-namespace WebApi.Tests.AuthcontrollerTests
+namespace Web.Api.Tests.Controllers
 {
     public class AuthControllersTests
     {
