@@ -7,19 +7,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Api.Tests", "Tests\Web.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web.Api", "Web.Api", "{E4BC78F7-E1A1-4C30-BB7B-EF53F30C93CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Api", "Web\Api\Web.Api\Web.Api.csproj", "{336B6A6D-B241-471E-90F4-10EBDADBD1FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Api", "Web\Api\Web.Api\Web.Api.csproj", "{336B6A6D-B241-471E-90F4-10EBDADBD1FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E3984300-29B4-4B21-879B-8D72A1FDDE34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserData", "Infrastructure\Data\UserData\UserData.csproj", "{0D1C91BC-77DE-4785-95C3-5A9E6C5BBF3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserData", "Infrastructure\Data\UserData\UserData.csproj", "{0D1C91BC-77DE-4785-95C3-5A9E6C5BBF3B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{E70E4D5E-EDEA-4472-A768-B396DBC0332B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUploader.Domain", "Domain\DataUploader.Domain\DataUploader.Domain.csproj", "{DCD47C39-034B-41C3-9C79-D2414C94FA8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUploader.Domain", "Domain\DataUploader.Domain\DataUploader.Domain.csproj", "{DCD47C39-034B-41C3-9C79-D2414C94FA8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserData.Tests", "Tests\UserData.Tests\UserData.Tests.csproj", "{1D13DB2A-DC98-45D1-A238-F80917154366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserData.Tests", "Tests\UserData.Tests\UserData.Tests.csproj", "{1D13DB2A-DC98-45D1-A238-F80917154366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Api.DTO", "Web\Api\Web.Api.DTO\Web.Api.DTO.csproj", "{338DF96C-FB6F-436F-B519-3A67B264271E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Api.DTO", "Web\Api\Web.Api.DTO\Web.Api.DTO.csproj", "{338DF96C-FB6F-436F-B519-3A67B264271E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{31165C81-EFE8-45B4-97FF-9EEBA7C98EDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUploader.Infrastructure", "Infrastructure\DataUploader.Infrastructure\DataUploader.Infrastructure.csproj", "{B7951CE6-A191-4AC7-89A1-DF90D9629C7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUploader.Infrastructure.Tests", "Tests\DataUploader.Infrastructure.Tests\DataUploader.Infrastructure.Tests.csproj", "{C97301D4-BB81-4F8B-A38E-E2AE04F3156A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,14 @@ Global
 		{338DF96C-FB6F-436F-B519-3A67B264271E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338DF96C-FB6F-436F-B519-3A67B264271E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338DF96C-FB6F-436F-B519-3A67B264271E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7951CE6-A191-4AC7-89A1-DF90D9629C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7951CE6-A191-4AC7-89A1-DF90D9629C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7951CE6-A191-4AC7-89A1-DF90D9629C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7951CE6-A191-4AC7-89A1-DF90D9629C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C97301D4-BB81-4F8B-A38E-E2AE04F3156A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C97301D4-BB81-4F8B-A38E-E2AE04F3156A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C97301D4-BB81-4F8B-A38E-E2AE04F3156A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C97301D4-BB81-4F8B-A38E-E2AE04F3156A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +76,8 @@ Global
 		{DCD47C39-034B-41C3-9C79-D2414C94FA8C} = {E70E4D5E-EDEA-4472-A768-B396DBC0332B}
 		{1D13DB2A-DC98-45D1-A238-F80917154366} = {E3984300-29B4-4B21-879B-8D72A1FDDE34}
 		{338DF96C-FB6F-436F-B519-3A67B264271E} = {E4BC78F7-E1A1-4C30-BB7B-EF53F30C93CA}
+		{B7951CE6-A191-4AC7-89A1-DF90D9629C7D} = {31165C81-EFE8-45B4-97FF-9EEBA7C98EDE}
+		{C97301D4-BB81-4F8B-A38E-E2AE04F3156A} = {31165C81-EFE8-45B4-97FF-9EEBA7C98EDE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71F65A80-B12F-4A32-AB98-7489E4C069D3}

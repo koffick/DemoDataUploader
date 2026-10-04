@@ -1,4 +1,5 @@
 using UserData.Extensions;
+using DataUploader.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddUserDataContextDependencies(builder.Configuration);
+builder.Services.AddInfrastructureDependencies(builder.Configuration);
 
 var app = builder.Build();
 

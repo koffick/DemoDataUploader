@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\DataUploader.Infrastructure\DataUploader.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\Data\UserData\UserData.csproj" />
     <ProjectReference Include="..\Web.Api.DTO\Web.Api.DTO.csproj" />
   </ItemGroup>
