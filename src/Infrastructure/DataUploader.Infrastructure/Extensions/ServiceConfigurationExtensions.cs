@@ -1,5 +1,6 @@
 ﻿using DataUploader.Domain.Interfaces;
 using DataUploader.Infrastructure.Parsers;
+using DataUploader.Infrastructure.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,7 @@ namespace DataUploader.Infrastructure.Extensions
         public static void AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IExcelParser, ExcelParser>();
+            services.AddTransient<IFileProvider, FileProviderStub>();
         }
     }
 }
