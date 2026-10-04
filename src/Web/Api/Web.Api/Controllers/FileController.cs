@@ -1,4 +1,5 @@
 ﻿using DataUploader.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,6 +10,7 @@ namespace Web.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class FileController : ControllerBase
     {
         private IExcelParser _excelParser;
