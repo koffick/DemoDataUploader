@@ -1,0 +1,132 @@
+{
+	"rabbit_version": "4.1.2",
+	"rabbitmq_version": "4.1.2",
+	"product_name": "RabbitMQ",
+	"product_version": "4.1.2",
+	"rabbitmq_definition_format": "cluster",
+	"original_cluster_name": "rabbit@rabbitmq",
+	"explanation": "Definitions of cluster 'rabbit@rabbitmq'",
+    "users": [
+		{
+			"name": "guest",
+			"password_hash": "de6UyG8+MY4Y6ZdiEpJPeiB393twKDqsMzLuKGr1a8baMyVA",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": [
+				"administrator"
+			],
+			"limits": {}
+		},
+		{
+			"name": "webapi",
+			"password_hash": "+M8AGTZYVbu5PlixcKvDhRYMibzwTPQQacrRLGAJ/Ktvms8d",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": [
+				"datauploader_webapi"
+			],
+			"limits": {}
+		},
+		{
+			"name": "engine",
+			"password_hash": "+M8AGTZYVbu5PlixcKvDhRYMibzwTPQQacrRLGAJ/Ktvms8d",
+			"hashing_algorithm": "rabbit_password_hashing_sha256",
+			"tags": [
+				"datauploader_engine"
+			],
+			"limits": {}
+		}
+    ],
+    "vhosts": [
+		{
+			"name": "/",
+			"description": "",
+			"metadata": {
+				"description": "",
+				"tags": [],
+				"default_queue_type": "classic"
+			},
+			"tags": []
+		}
+    ],
+	"permissions": [
+		{
+			"user": "guest",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		},
+		{
+			"user": "webapi",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ""
+		},
+		{
+			"user": "engine",
+			"vhost": "/",
+			"configure": ".*",
+			"write": ".*",
+			"read": ".*"
+		}
+	],
+    "topic_permissions": [],
+    "parameters": [],
+    "global_parameters": [
+        {
+            "name": "cluster_name",
+            "value": "rabbit@rabbitmq"
+        }
+    ],
+    "policies": [],
+    "queues": [
+		{
+		  "name": "DataUploader.Audit.UserActionHistory",
+		  "vhost": "/",
+		  "durable": true,
+		  "auto_delete": false,
+		  "arguments": {
+		  }
+		},
+		{
+		  "name": "DataUploader.Engine.FileToProccessing",
+		  "vhost": "/",
+		  "durable": true,
+		  "auto_delete": false,
+		  "arguments": {
+		  }
+		}		
+	],
+    "exchanges": [
+		{
+		  "name": "DataUploader.FileToProccessing",
+		  "vhost": "/",
+		  "type": "fanout",
+		  "durable": true,
+		  "auto_delete": true,
+		  "internal": false,
+		  "arguments": {
+		  }
+		}
+	],
+    "bindings": [
+		{
+		  "source": "DataUploader.FileToProccessing",
+		  "vhost": "/",
+		  "destination": "DataUploader.Audit.UserActionHistory",
+		  "destination_type": "queue",
+		  "routing_key": "UserActionHistory",
+		  "arguments": {
+		  }
+		},
+		{
+		  "source": "DataUploader.FileToProccessing",
+		  "vhost": "/",
+		  "destination": "DataUploader.Engine.FileToProccessing",
+		  "destination_type": "queue",
+		  "routing_key": "FileToProccessing",
+		  "arguments": {
+		  }
+		}		
+	]
+}
