@@ -55,10 +55,33 @@ services:
       - "5100:8080"
     restart: always
     networks:
-      - dd-net
-
+      - dd-net     
+      
+  data-downloader-rabbit:
+    container_name: rabbitmq
+    image: rabbitmq:latest
+    environment:
+        - RABBITMQ_DEFAULT_PASS=$RABBIT_PASS
+    build:
+        context: ../..
+        dockerfile: docker/Rabbit.Dockerfile
+    volumes:
+        - rabbit_data:/var/lib/rabbitmq/
+    ports:
+        - 15672:15672
+        - 5672:5672
+    healthcheck:
+        test: rabbitmq-diagnostics -q status
+        interval: 45s
+        timeout: 45s
+        retries: 8
+    restart: always   
+    networks:
+      - dd-net  
+      
 volumes:
   pg_data: null
+  rabbit_data: null  
   
 networks:
   dd-net:
