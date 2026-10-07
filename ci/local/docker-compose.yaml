@@ -48,6 +48,12 @@ services:
       dockerfile: docker/Web.Api.Dockerfile
     environment:
       ConnectionStrings__UserDBConnection: $WEBAPI_USER_DB_CONNECTION
+      RabbitMQConnections__0__Host: $RABBIT_CONNECTION_HOST
+      RabbitMQConnections__0__Port: $RABBIT_CONNECTION_PORT
+      RabbitMQConnections__0__VirtualHost: $RABBIT_CONNECTION_VIRTUAL_HOST
+      RabbitMQConnections__0__UserName: $RABBIT_CONNECTION_WEBAPI_USERNAME
+      RabbitMQConnections__0__Password: $RABBIT_CONNECTION_WBAPI_PASSWORD
+      RabbitMQConnections__0__ExchangeName: $RABBIT_CONNECTION_EXCHANGE_FILE_TO_PROCESSING
     depends_on:
       data-downloader-postgres:
         condition: service_healthy
