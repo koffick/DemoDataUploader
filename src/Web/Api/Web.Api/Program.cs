@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Web.Api.Models;
 using Microsoft.OpenApi.Models;
+using DataUploader.RabbitMQ.Models;
+using DataUploader.RabbitMQ.Extensions;
+
+const string RABBIT_CONNECTIONS_SECTION = "RabbitMQConnections";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +59,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+var connectionCredentials = builder.Configuration.GetSection(RABBIT_CONNECTIONS_SECTION).Get<List<ConnectionCredentials>>();
+builder.Services.AddRabbitMqDependencies(connectionCredentials);
 builder.Services.AddUserDataContextDependencies(builder.Configuration);
 builder.Services.AddInfrastructureDependencies(builder.Configuration);
 
