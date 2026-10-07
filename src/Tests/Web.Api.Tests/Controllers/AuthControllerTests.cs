@@ -2,6 +2,7 @@
 using DataUploader.Domain.Interfaces;
 using DataUploader.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,15 +11,17 @@ using WebApi.Host.Controllers;
 
 namespace Web.Api.Tests.Controllers
 {
-    public class AuthControllersTests
+    public class AuthControllerTests
     {
         private AuthController _controller;
         private Mock<IUserRepository> _userRepository;
+        private Mock<ILogger<AuthController>> _logger;
 
-        public AuthControllersTests()
+        public AuthControllerTests()
         {
             _userRepository = new Mock<IUserRepository>();
-            _controller = new AuthController(_userRepository.Object);
+            _logger = new Mock<ILogger<AuthController>>();
+            _controller = new AuthController(_userRepository.Object, _logger.Object);
         }
 
         [Fact]

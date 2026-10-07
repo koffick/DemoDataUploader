@@ -14,6 +14,7 @@ namespace Web.Api.Controllers
     [Authorize]
     public class FileController : ControllerBase
     {
+        private ILogger<FileController> _logger;
         private IExcelParser _excelParser;
         private IFileProvider _fileProvider;
         private IProducer _producer;
@@ -21,11 +22,13 @@ namespace Web.Api.Controllers
         public FileController(
             IExcelParser excelParser,
             IFileProvider fileProvider,
-            IProducer producer)
+            IProducer producer,
+            ILogger<FileController> logger)
         {
             _excelParser = excelParser ?? throw new ArgumentNullException(nameof(excelParser));
             _fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));
             _producer = producer ?? throw new ArgumentNullException(nameof(producer));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpPost]
@@ -35,6 +38,9 @@ namespace Web.Api.Controllers
         {
             try
             {
+                var messageTask = $"Задача '{fileData?.EventName}', ID '{fileData?.EventId}'.";
+                _logger.LogInformation($"Поступил файл для загрузки данных. {messageTask}");
+                var message = "Файл загружен.";
                 if (fileData == null || fileData.File == null)
                 {
                     throw new ArgumentNullException(nameof(fileData));
@@ -46,7 +52,8 @@ namespace Web.Api.Controllers
                 {
                     if (!fileData.File.FileName.Contains(".xlsx"))
                     {
-                        var message = $"Тип файла должен быть \".xlsx\"";
+                        message = $"Тип файла должен быть \".xlsx\"";
+                        _logger.LogInformation($"Ошибка '{message}'. {messageTask}");
                         return BadRequest(new ApiFailureResponse(message));
                     }
                 }
@@ -54,7 +61,8 @@ namespace Web.Api.Controllers
                 {
                     if (!contentType.Contains("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     {
-                        var message = $"Тип файла должен соответствовать формату \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\"";
+                        message = $"Тип файла должен соответствовать формату \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\"";
+                        _logger.LogInformation($"Ошибка '{message}'. {messageTask}");
                         return BadRequest(new ApiFailureResponse(message));
                     }
                 }
@@ -64,7 +72,8 @@ namespace Web.Api.Controllers
                 if (!_excelParser.IsValidate(stream, out var errors))
                 {
                     var errorsJson = Newtonsoft.Json.JsonConvert.SerializeObject(errors);
-                    var message = $"Файл не прошел проверку. Количество ошибок {errors.Count()}. Список ошибок: {errorsJson}";
+                    message = $"Файл не прошел проверку. Количество ошибок {errors.Count()}. Список ошибок: {errorsJson}";
+                    _logger.LogInformation($"Ошибка '{message}'.{messageTask}");
                     return BadRequest(new ApiFailureResponse(message));
                 }
 
@@ -84,11 +93,13 @@ namespace Web.Api.Controllers
                 };
 
                 await _producer.PublishAsync(eventMessage);
-                return Ok("Файл загружен.");
+                _logger.LogInformation($"{message} {messageTask}");
+                return Ok(message);
             }
             catch (Exception ex)
             {
                 var message = $"В процессе загрузки файла произошла непредвиденная ошибка: {ex.Message}";
+                _logger.LogError(message, ex);
                 return BadRequest(new ApiFailureResponse(message));
             }
         }

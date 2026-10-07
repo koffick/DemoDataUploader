@@ -12,11 +12,13 @@ namespace WebApi.Host.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private ILogger<AuthController> _logger;
         private readonly IUserRepository _userRepository;
 
-        public AuthController(IUserRepository userRepository)
+        public AuthController(IUserRepository userRepository, ILogger<AuthController> logger)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -26,10 +28,12 @@ namespace WebApi.Host.Controllers
         {
             try
             {
+                _logger.LogInformation($"Вход в систему под именем '{login}'.");
                 var userInfo = _userRepository.Find(login);
                 if (userInfo == null)
                 {
                     var message = $"Пользователь с именем '{login}' в сиситеме не зарегистрирован.";
+                    _logger.LogInformation(message);
                     return BadRequest(new ApiFailureResponse(message));
                 }
 
@@ -41,11 +45,13 @@ namespace WebApi.Host.Controllers
                         expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)), // время действия 2 минуты
                         signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
+                _logger.LogInformation($"Пользователь под именем '{login}' успешно идетифицировался.");
                 return Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
             }
             catch (Exception ex)
             {
-                var message = $"В процессе идентификации произошла непредвиденная ошибка: {ex.Message}";
+                var message = $"В процессе идентификации под именем '{login}'', произошла непредвиденная ошибка: {ex.Message}";
+                _logger.LogError(message, ex);
                 return BadRequest(new ApiFailureResponse(message));
             }
         }

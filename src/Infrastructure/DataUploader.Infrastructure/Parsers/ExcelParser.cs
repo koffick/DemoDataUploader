@@ -44,6 +44,10 @@ namespace DataUploader.Infrastructure.Parsers
                 {
                     errorsReturn.Add($"Отсутствует страница №{configuration?.PageNumber}");
                 }
+                else if (ex.Message == "Specified cast is not valid.")
+                {
+                    errorsReturn.Add($"Указанное преобразование типов недопустимо.");
+                }
                 else
                 {
                     errorsReturn.Add(ex.Message);

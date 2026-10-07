@@ -1,5 +1,6 @@
 ﻿using DataUploader.RabbitMQ.Interfaces;
 using DataUploader.RabbitMQ.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
@@ -11,15 +12,17 @@ namespace DataUploader.RabbitMQ.Services;
 /// </summary>
 public class Producer : IProducer
 {
+    private ILogger<Producer> _logger;
     private readonly RabbitMQConnectionsWrapper _connectionsWrapper;
 
     /// <summary>
     /// Конструктор класса Producer
     /// </summary>
     /// <param name="connectionsWrapper">Обертка над коллекцией соединений</param>
-    public Producer(RabbitMQConnectionsWrapper connectionsWrapper)
+    public Producer(RabbitMQConnectionsWrapper connectionsWrapper, ILogger<Producer> logger)
     {
-        _connectionsWrapper = connectionsWrapper;
+        _connectionsWrapper = connectionsWrapper ?? throw new ArgumentNullException(nameof(connectionsWrapper));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <inheritdoc cref="IProducer.PublishAsync{T}"/>
@@ -33,7 +36,7 @@ public class Producer : IProducer
                 .Connection;
             if (connection == null)
             {
-                //TODO отправить в лог сообщение об отсутствии соединения с RabbitMQ
+                _logger.LogWarning($"Подключение к RabbitMQ с параметром ExchangeName = '{@event.ExchangeName}' не настроено.");
                 return;
             }
 
@@ -52,7 +55,8 @@ public class Producer : IProducer
         }
         catch (Exception ex)
         {
-            //TODO Отправить в лог сообщение, об ошибке при отправке в раббит.
+            var message = $"А процессе отправки сообщения в RabbitMQ получена ошибка '{ex.Message}'.";
+            _logger.LogError(message, ex);
         }
     }
 }

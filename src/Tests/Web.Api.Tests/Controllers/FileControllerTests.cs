@@ -5,6 +5,7 @@ using DataUploader.RabbitMQ.Interfaces;
 using DataUploader.RabbitMQ.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.Security.Claims;
 using Web.Api.Controllers;
@@ -20,6 +21,7 @@ namespace Web.Api.Tests.Controllers
         private Mock<IExcelParser> _excelParser;
         private Mock<IFileProvider> _fileProvider;
         private Mock<IProducer> _producer;
+        private Mock<ILogger<FileController>> _logger;
 
         public FileControllerTests()
         {
@@ -27,7 +29,8 @@ namespace Web.Api.Tests.Controllers
             _excelParser = new Mock<IExcelParser>();
             _fileProvider = new Mock<IFileProvider>();
             _producer = new Mock<IProducer>();
-            _controller = new FileController(_excelParser.Object, _fileProvider.Object, _producer.Object);
+            _logger = new Mock<ILogger<FileController>>();
+            _controller = new FileController(_excelParser.Object, _fileProvider.Object, _producer.Object, _logger.Object);
         }
 
         [Fact]
