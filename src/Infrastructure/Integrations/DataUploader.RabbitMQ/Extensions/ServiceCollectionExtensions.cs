@@ -1,4 +1,6 @@
-﻿using DataUploader.RabbitMQ.Models;
+﻿using DataUploader.RabbitMQ.Interfaces;
+using DataUploader.RabbitMQ.Models;
+using DataUploader.RabbitMQ.Services;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 
@@ -20,6 +22,7 @@ public static class ServiceCollectionExtensions
     {
         var connections = GetConnectionDescriptions(connectionCredentials);
         services.AddSingleton(new RabbitMQConnectionsWrapper(connections.ToArray()));
+        services.AddTransient<IProducer, Producer>();
     }
 
     private static IEnumerable<ConnectionDescription> GetConnectionDescriptions(IEnumerable<ConnectionCredentials> connectionCredentials)

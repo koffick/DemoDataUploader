@@ -1,6 +1,8 @@
 ﻿using AutoFixture;
 using DataUploader.Domain.Interfaces;
 using DataUploader.Domain.Models;
+using DataUploader.RabbitMQ.Interfaces;
+using DataUploader.RabbitMQ.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -17,13 +19,15 @@ namespace Web.Api.Tests.Controllers
         private UploadFileRequestBuilder _builder;
         private Mock<IExcelParser> _excelParser;
         private Mock<IFileProvider> _fileProvider;
+        private Mock<IProducer> _producer;
 
         public FileControllerTests()
         {
             _builder = new UploadFileRequestBuilder();
             _excelParser = new Mock<IExcelParser>();
             _fileProvider = new Mock<IFileProvider>();
-            _controller = new FileController(_excelParser.Object, _fileProvider.Object);
+            _producer = new Mock<IProducer>();
+            _controller = new FileController(_excelParser.Object, _fileProvider.Object, _producer.Object);
         }
 
         [Fact]
@@ -52,6 +56,13 @@ namespace Web.Api.Tests.Controllers
             Assert.Equal("Файл загружен.", message);
             _excelParser.Verify(v => v.IsValidate(It.IsAny<Stream>(), out errors, It.IsAny<OperationConfiguration>()), Times.Once);
             _fileProvider.Verify(v => v.SaveFileAsync(It.IsAny<Stream>(), data.File.FileName), Times.Once);
+            _producer.Verify(v => v.PublishAsync(It.Is<FileToProccessMessage>(message =>
+                message.ExchangeName == "DataUploader.FileToProccessing" &&
+                message.FileName == data.File.FileName &&
+                message.FileId == fileId &&
+                message.EventId == data.EventId &&
+                message.EventName == data.EventName &&
+                message.UserName == userName)), Times.Once);
         }
 
         [Fact]

@@ -1,8 +1,9 @@
 ﻿using DataUploader.Domain.Interfaces;
+using DataUploader.RabbitMQ.Interfaces;
+using DataUploader.RabbitMQ.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Web.Api.DTO.Requests;
 using Web.Api.DTO.Responses;
 
@@ -15,13 +16,16 @@ namespace Web.Api.Controllers
     {
         private IExcelParser _excelParser;
         private IFileProvider _fileProvider;
+        private IProducer _producer;
 
         public FileController(
             IExcelParser excelParser,
-            IFileProvider fileProvider)
+            IFileProvider fileProvider,
+            IProducer producer)
         {
             _excelParser = excelParser ?? throw new ArgumentNullException(nameof(excelParser));
             _fileProvider = fileProvider ?? throw new ArgumentNullException(nameof(fileProvider));
+            _producer = producer ?? throw new ArgumentNullException(nameof(producer));
         }
 
         [HttpPost]
@@ -65,6 +69,21 @@ namespace Web.Api.Controllers
                 }
 
                 var fileId = await _fileProvider.SaveFileAsync(stream, fileData.File.FileName);
+                var userName = User?.Claims.FirstOrDefault(f => f.Type == ClaimTypes.Name)?.Value ?? "Пользователь не идентифицирован";
+
+                var eventMessage = new FileToProccessMessage()
+                {
+                    EventName = fileData.EventName,
+                    EventId = fileData.EventId,
+                    FileId = fileId,
+                    FileName = fileData.File.FileName,
+                    EventDate = DateTime.Now,
+                    ExchangeName = "DataUploader.FileToProccessing",
+                    RoutingKey = string.Empty,
+                    UserName = userName,
+                };
+
+                await _producer.PublishAsync(eventMessage);
                 return Ok("Файл загружен.");
             }
             catch (Exception ex)
