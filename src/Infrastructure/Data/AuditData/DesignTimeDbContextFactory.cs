@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace UserData
+namespace AuditData
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<DataContext>
     {
@@ -13,7 +13,7 @@ namespace UserData
                 .AddUserSecrets("bf3f6e45-3dd2-44a9-acf0-4c807df0235c")
                 .Build();
 
-            var connectionString = configuration.GetSection("ConnectionStrings:UserDBConnection").Value;
+            var connectionString = configuration.GetSection("ConnectionStrings:AuditDBConnection").Value;
 
             if (string.IsNullOrEmpty(connectionString))
             {
