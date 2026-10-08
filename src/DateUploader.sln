@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUploader.RabbitMQ", "In
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{FEBEA56E-5E26-4990-8735-EA0E52DB3DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditData", "Infrastructure\Data\AuditData\AuditData.csproj", "{560063C0-1D10-4F7B-A874-14ECE87D4009}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditData", "Infrastructure\Data\AuditData\AuditData.csproj", "{560063C0-1D10-4F7B-A874-14ECE87D4009}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditData.Tests", "Tests\AuditData.Tests\AuditData.Tests.csproj", "{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{560063C0-1D10-4F7B-A874-14ECE87D4009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{560063C0-1D10-4F7B-A874-14ECE87D4009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{560063C0-1D10-4F7B-A874-14ECE87D4009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{C97301D4-BB81-4F8B-A38E-E2AE04F3156A} = {31165C81-EFE8-45B4-97FF-9EEBA7C98EDE}
 		{2E64A563-3247-46A1-92E4-D18C4066AD8E} = {FEBEA56E-5E26-4990-8735-EA0E52DB3DBA}
 		{560063C0-1D10-4F7B-A874-14ECE87D4009} = {E3984300-29B4-4B21-879B-8D72A1FDDE34}
+		{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB} = {E3984300-29B4-4B21-879B-8D72A1FDDE34}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71F65A80-B12F-4A32-AB98-7489E4C069D3}

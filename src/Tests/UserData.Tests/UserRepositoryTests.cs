@@ -4,10 +4,9 @@ using DataUploader.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
-using UserData;
 using UserData.Mapper;
 
-namespace DataUploader.User.Data.Tests.Repositories
+namespace UserData.Tests
 {
     public class UserRepositoryTests
     {
@@ -42,7 +41,7 @@ namespace DataUploader.User.Data.Tests.Repositories
         [Fact]
         public void Find_Must_Be_Return_User()
         {
-            var user = new Fixture().Create<UserData.Models.User>();
+            var user = new Fixture().Create<Models.User>();
             _dataContext.Add(user);
             _dataContext.SaveChanges();
 
