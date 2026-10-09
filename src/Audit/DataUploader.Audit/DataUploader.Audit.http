@@ -1,0 +1,6 @@
+@DataUploader.Audit_HostAddress = http://localhost:5250
+
+GET {{DataUploader.Audit_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
