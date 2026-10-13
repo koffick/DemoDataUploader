@@ -14,31 +14,10 @@ public class FileActionHistory
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Идентификатор пользователя.
-    /// </summary>
-    [Required]
-    public Guid UserId { get; set; }
-
-    /// <summary>
     ///  Идентификатор файла.
     /// </summary>
     [Required]
     public Guid FileId { get; set; }
-
-    /// <summary>
-    /// Имя файла.
-    /// </summary>
-    public string FileName { get; set; }
-
-    /// <summary>
-    /// Идентификатор события.
-    /// </summary>
-    public Guid EventId { get; set; }
-
-    /// <summary>
-    /// Наименование события.
-    /// </summary>
-    public string EventName { get; set; }
 
     /// <summary>
     /// Наименование действия.

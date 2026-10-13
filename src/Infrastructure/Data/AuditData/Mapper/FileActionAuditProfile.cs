@@ -6,9 +6,9 @@ namespace AuditData.Mapper
     /// <summary>
     /// Класс сопоставления <see cref="Models.FileActionHistory"/> c <see cref="FileActionHistory"/>
     /// </summary>
-    public class AuditProfile : Profile
+    public class FileActionAuditProfile : Profile
     {
-        public AuditProfile()
+        public FileActionAuditProfile()
         {
             CreateMap<Models.FileActionHistory, FileActionHistory>()
                 .ReverseMap()

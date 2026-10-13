@@ -36,19 +36,8 @@ namespace AuditData.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid>("FileId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -56,9 +45,6 @@ namespace AuditData.Migrations
 
                     b.Property<DateTime>("SavedDateTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 

@@ -25,6 +25,7 @@ namespace AuditData.Tests
 
             var configuration = new MapperConfiguration(cfg =>
             {
+                cfg.AddProfile(new FileActionAuditProfile());
                 cfg.AddProfile(new UserActionAuditProfile());
             },
             new LoggerFactory());
@@ -42,12 +43,23 @@ namespace AuditData.Tests
         [Fact]
         public async Task SaveUserAction_Must_Be_Return_User()
         {
-            var UserAction = new Fixture().Create<UserActionHistory>();
+            var userAction = new Fixture().Create<UserActionHistory>();
  
-            await _auditRepository.SaveUserActionHistory(UserAction);
+            await _auditRepository.SaveUserActionHistory(userAction);
             Assert.Equal(_dataContext.UserActionHistory.Count(), 1);
-            var UserActionData = _dataContext.UserActionHistory.FirstOrDefault();
-            Assert.Equal(UserActionData.FileId, UserAction.FileId);
+            var userActionData = _dataContext.UserActionHistory.FirstOrDefault();
+            Assert.Equal(userActionData.FileId, userAction.FileId);
+        }
+
+        [Fact]
+        public async Task SaveFileAction_Must_Be_Return_User()
+        {
+            var fileAction = new Fixture().Create<FileActionHistory>();
+
+            await _auditRepository.SaveFileActionHistory(fileAction);
+            Assert.Equal(_dataContext.FileActionHistory.Count(), 1);
+            var fileActionData = _dataContext.FileActionHistory.FirstOrDefault();
+            Assert.Equal(fileActionData.FileId, fileAction.FileId);
         }
     }
 }

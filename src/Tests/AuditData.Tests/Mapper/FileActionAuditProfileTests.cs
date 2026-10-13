@@ -6,16 +6,16 @@ using AuditData.Mapper;
 
 namespace AuditData.Tests.Mapper
 {
-    public class AuditProfileTests
+    public class FileActionAuditProfileTests
     {
         private IMapper _mapper;
         private MapperConfiguration _configuration;
 
-        public AuditProfileTests()
+        public FileActionAuditProfileTests()
         {
             _configuration = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new AuditProfile());
+                cfg.AddProfile(new FileActionAuditProfile());
             },
             new LoggerFactory());
             _mapper = new AutoMapper.Mapper(_configuration);
@@ -35,15 +35,11 @@ namespace AuditData.Tests.Mapper
 
             Assert.NotNull(fileAction);
             Assert.Equal(fileAction.Id, row.Id);
-            Assert.Equal(fileAction.FileName, row.FileName);
             Assert.Equal(fileAction.FileId, row.FileId);
-            Assert.Equal(fileAction.EventName, row.EventName);
-            Assert.Equal(fileAction.EventId, row.EventId);
             Assert.Equal(fileAction.ActionType, row.ActionType);
             Assert.Equal(fileAction.ActionDateTime, row.ActionDateTime);
             Assert.Equal(fileAction.SavedDateTime, row.SavedDateTime);
             Assert.Equal(fileAction.Note, row.Note);
-            Assert.Equal(fileAction.UserId, row.UserId);
         }
 
         [Fact]
@@ -54,15 +50,11 @@ namespace AuditData.Tests.Mapper
 
             Assert.NotNull(fileAction);
             Assert.Equal(fileAction.Id, row.Id);
-            Assert.Equal(fileAction.FileName, row.FileName);
             Assert.Equal(fileAction.FileId, row.FileId);
-            Assert.Equal(fileAction.EventName, row.EventName);
-            Assert.Equal(fileAction.EventId, row.EventId);
             Assert.Equal(fileAction.ActionType, row.ActionType);
             Assert.Equal(fileAction.ActionDateTime, row.ActionDateTime);
             Assert.Equal(fileAction.SavedDateTime, row.SavedDateTime);
             Assert.Equal(fileAction.Note, row.Note);
-            Assert.Equal(fileAction.UserId, row.UserId);
         }
 
         [Fact]

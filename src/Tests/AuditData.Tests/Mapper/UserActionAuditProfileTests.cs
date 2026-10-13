@@ -68,10 +68,10 @@ namespace AuditData.Tests.Mapper
         {
             var row = new Fixture().Create<UserActionHistory>();
             row.Id = null;
-            var fileAction = _mapper.Map<Models.UserActionHistory>(row);
+            var userAction = _mapper.Map<Models.UserActionHistory>(row);
 
-            Assert.NotEqual(fileAction.Id, row.Id);
-            Assert.NotEqual(fileAction.Id, default);
+            Assert.NotEqual(userAction.Id, row.Id);
+            Assert.NotEqual(userAction.Id, default);
         }
     }
 }
