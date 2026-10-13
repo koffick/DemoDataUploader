@@ -8,6 +8,8 @@ namespace AuditData
 
         internal DbSet<Models.FileActionHistory> FileActionHistory { get; set; }
 
+        internal DbSet<Models.UserActionHistory> UserActionHistory { get; set; }
+
         public DataContext(DbContextOptions options) : base(options)
         {
         }
@@ -18,6 +20,14 @@ namespace AuditData
 
             modelBuilder
                 .Entity<Models.FileActionHistory>()
+                .HasIndex(x => new { x.FileId });
+
+            modelBuilder
+                .Entity<Models.UserActionHistory>()
+                .HasIndex(x => new { x.UserId });
+
+            modelBuilder
+                .Entity<Models.UserActionHistory>()
                 .HasIndex(x => new { x.FileId });
 
             base.OnModelCreating(modelBuilder);
