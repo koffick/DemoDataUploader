@@ -24,5 +24,15 @@ namespace AuditData
                 await _dataContext.SaveChangesAsync();
             }
         }
+
+        public async Task SaveUserActionHistory(UserActionHistory action)
+        {
+            if (action != null)
+            {
+                var actionData = _mapper.Map<Models.UserActionHistory>(action);
+                await _dataContext.UserActionHistory.AddAsync(actionData);
+                await _dataContext.SaveChangesAsync();
+            }
+        }
     }
 }

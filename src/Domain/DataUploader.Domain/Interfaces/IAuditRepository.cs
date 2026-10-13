@@ -13,4 +13,11 @@ public interface IAuditRepository
     /// <param name="action">Параметры действия с файлом.</param>
     /// <returns></returns>
     Task SaveFileActionHistory(FileActionHistory action);
+
+    /// <summary>
+    /// Сохраняет информацию о действии пользователя.
+    /// </summary>
+    /// <param name="action">Параметры действия.</param>
+    /// <returns></returns>
+    Task SaveUserActionHistory(UserActionHistory action);
 }
