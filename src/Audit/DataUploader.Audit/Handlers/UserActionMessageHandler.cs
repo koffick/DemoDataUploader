@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using DataUploader.Audit.Interfaces;
 using DataUploader.RabbitMQ.Abstractions;
 using DataUploader.RabbitMQ.Models;
-using DataUploader.Audit.Models;
+using DataUploader.Domain.Models;
 
 namespace Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers
 {
@@ -34,7 +34,7 @@ namespace Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers
         {
             try
             {
-                var userAction = _mapper.Map<UserAction>(@event);
+                var userAction = _mapper.Map<UserActionHistory>(@event);
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var businessService =

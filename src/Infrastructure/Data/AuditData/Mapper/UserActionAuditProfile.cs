@@ -12,7 +12,8 @@ namespace AuditData.Mapper
         {
             CreateMap<Models.UserActionHistory, UserActionHistory>()
                 .ReverseMap()
-                .ForMember(s => s.Id, d => d.MapFrom(m => m.Id ?? Guid.NewGuid()));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(m => m.Id ?? Guid.NewGuid()))
+                .ForMember(dest => dest.SavedDateTime, opt => opt.Condition((src, dest) => src.SavedDateTime != null));
         }
     }
 }

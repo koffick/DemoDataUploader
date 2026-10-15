@@ -43,7 +43,7 @@ public class UserActionHistory
     /// <summary>
     /// Дата создания.
     /// </summary>
-    public DateTime SavedDateTime { get; set; }
+    public DateTime? SavedDateTime { get; set; }
 
     /// <summary>
     /// Комментарий.

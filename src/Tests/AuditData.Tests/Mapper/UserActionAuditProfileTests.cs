@@ -61,6 +61,10 @@ namespace AuditData.Tests.Mapper
             Assert.Equal(fileAction.SavedDateTime, row.SavedDateTime);
             Assert.Equal(fileAction.Note, row.Note);
             Assert.Equal(fileAction.UserId, row.UserId);
+
+            row.SavedDateTime = null;
+            fileAction = _mapper.Map<Models.UserActionHistory>(row);
+            Assert.NotEqual(fileAction.SavedDateTime, default);
         }
 
         [Fact]

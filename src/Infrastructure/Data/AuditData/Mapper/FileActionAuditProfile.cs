@@ -12,7 +12,7 @@ namespace AuditData.Mapper
         {
             CreateMap<Models.FileActionHistory, FileActionHistory>()
                 .ReverseMap()
-                .ForMember(s => s.Id, d => d.MapFrom(m => m.Id ?? Guid.NewGuid()));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(m => m.Id ?? Guid.NewGuid()));
         }
     }
 }
