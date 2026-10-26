@@ -49,5 +49,18 @@ namespace UserData.Tests
             Assert.NotNull(userInfo);
             Assert.Equal(userInfo.Id, user.Id);
         }
+
+        [Fact]
+        public void FindByFullName_Must_Be_Return_User()
+        {
+            var user = new Fixture().Create<Models.User>();
+            _dataContext.Add(user);
+            _dataContext.SaveChanges();
+            var fullName = string.Join(" ", [user.FirstName, user.LastName]);
+
+            var userInfo = _userRepository.FindByFullName(fullName);
+            Assert.NotNull(userInfo);
+            Assert.Equal(userInfo.Id, user.Id);
+        }
     }
 }

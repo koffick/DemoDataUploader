@@ -1,9 +1,9 @@
-﻿using DataUploader.RabbitMQ.Interfaces;
+﻿using DataUploader.Domain.Models;
 
 namespace DataUploader.Audit.Interfaces
 {
     public interface IAuditService
     {
-        public Task<Guid> SaveToDBAsync(IMessage message);
+        public Task<Guid> SaveToDBAsync(UserActionHistory userAction);
     }
 }

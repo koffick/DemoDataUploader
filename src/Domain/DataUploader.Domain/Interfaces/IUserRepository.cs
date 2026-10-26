@@ -13,4 +13,11 @@ public interface IUserRepository
     /// <param name="login"></param>
     /// <returns></returns>
     UserInfo Find(string login);
+
+    /// <summary>
+    /// Ищет информацию о пользователе по имени.
+    /// </summary>
+    /// <param name="login"></param>
+    /// <returns></returns>
+    UserInfo FindByFullName(string name);
 }

@@ -4,6 +4,7 @@ using DataUploader.Audit.Interfaces;
 using DataUploader.RabbitMQ.Abstractions;
 using DataUploader.RabbitMQ.Models;
 using DataUploader.Domain.Models;
+using DataUploader.Domain.Interfaces;
 
 namespace Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers
 {
@@ -34,12 +35,14 @@ namespace Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers
         {
             try
             {
-                var userAction = _mapper.Map<UserActionHistory>(@event);
                 using (var scope = _serviceProvider.CreateScope())
                 {
+                    var userRepository =
+                        scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                    var userAction = _mapper.Map<UserActionHistory>(@event, opt => opt.Items["UserRepository"] = userRepository);
                     var businessService =
                         scope.ServiceProvider.GetRequiredService<IAuditService>();
-                    var fileActionId = await businessService.SaveToDBAsync(@event);
+                    var fileActionId = await businessService.SaveToDBAsync(userAction);
                     Logger.LogInformation($"Информация о действии с файлом успешно сохранена с ID = {fileActionId}");
                 }
             }

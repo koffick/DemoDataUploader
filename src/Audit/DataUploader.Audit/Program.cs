@@ -5,6 +5,7 @@ using Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers;
 using AuditData.Extensions;
 using DataUploader.RabbitMQ.Extensions;
 using DataUploader.RabbitMQ.Models;
+using UserData.Extensions;
 
 const string RABBIT_CONNECTIONS_SECTION = "RabbitMQConnections";
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IAuditService, AuditService>();
 builder.Services.AddAuditDataContextDependencies(builder.Configuration);
+builder.Services.AddUserDataContextDependencies(builder.Configuration);
 var connectionCredentials = builder.Configuration.GetSection(RABBIT_CONNECTIONS_SECTION).Get<List<ConnectionCredentials>>();
 builder.Services.AddRabbitMqDependencies(connectionCredentials);
 
