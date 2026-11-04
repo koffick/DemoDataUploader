@@ -10,7 +10,7 @@ namespace AuditData
 
         internal DbSet<Models.UserActionHistory> UserActionHistory { get; set; }
 
-        public DataContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 

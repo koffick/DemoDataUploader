@@ -6,6 +6,7 @@ using AuditData.Extensions;
 using DataUploader.RabbitMQ.Extensions;
 using DataUploader.RabbitMQ.Models;
 using UserData.Extensions;
+using DataUploader.Audit.Mapper;
 
 const string RABBIT_CONNECTIONS_SECTION = "RabbitMQConnections";
 
@@ -24,6 +25,7 @@ builder.Services.AddAuditDataContextDependencies(builder.Configuration);
 builder.Services.AddUserDataContextDependencies(builder.Configuration);
 var connectionCredentials = builder.Configuration.GetSection(RABBIT_CONNECTIONS_SECTION).Get<List<ConnectionCredentials>>();
 builder.Services.AddRabbitMqDependencies(connectionCredentials);
+builder.Services.AddAutoMapper(cfg => { }, typeof(UserActionHistoryAuditProfile));
 
 builder.Services.AddHostedService(serviceProvider =>
     new UserActionMessageHandler(
