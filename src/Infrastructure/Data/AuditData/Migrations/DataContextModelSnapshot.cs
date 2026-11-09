@@ -40,7 +40,6 @@ namespace AuditData.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("SavedDateTime")

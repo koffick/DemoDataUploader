@@ -38,5 +38,5 @@ public class FileActionHistory
     /// <summary>
     /// Комментарий.
     /// </summary>
-    public string Note { get; set; }
+    public string? Note { get; set; }
 }
