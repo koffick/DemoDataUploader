@@ -16,9 +16,18 @@ namespace DataUploader.Audit.Services
         }
 
 
-        public Task<Guid> SaveToDBAsync(UserActionHistory userAction)
+        public async Task<Guid> SaveToDBAsync(UserActionHistory userAction)
         {
-            return Task.FromResult(Guid.NewGuid());
+            try
+            {
+                await _auditRepository.SaveUserActionHistory(userAction);
+                return userAction.Id ?? default;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Ошибка при вызове метода SaveToDBAsync в AuditService. {ex.Message}", ex);
+                throw;
+            }
         }
     }
 }
