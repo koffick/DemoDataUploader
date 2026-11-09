@@ -36,7 +36,7 @@ namespace DataUploader.Audit.Tests.Services
                 .Create();
             _auditRepository.Setup(s => s.SaveUserActionHistory(It.IsAny<UserActionHistory>()))
                 .Callback<UserActionHistory>(cb => cb.Id = cb.Id ?? Guid.NewGuid());
-            var res = await _auditService.SaveToDBAsync(userActionHistory);
+            var res = await _auditService.UserActionSaveToDBAsync(userActionHistory);
             Assert.NotEqual(res, default);
             Assert.Equal(res, userActionHistory.Id);
             _auditRepository.Verify(v => v.SaveUserActionHistory(userActionHistory), Times.Once);

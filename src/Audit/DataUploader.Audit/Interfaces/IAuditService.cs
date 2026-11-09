@@ -4,6 +4,11 @@ namespace DataUploader.Audit.Interfaces
 {
     public interface IAuditService
     {
-        public Task<Guid> SaveToDBAsync(UserActionHistory userAction);
+        /// <summary>
+        /// Сохранение действия пользователя.
+        /// </summary>
+        /// <param name="userAction">Действие пользователя.</param>
+        /// <returns></returns>
+        public Task<Guid> UserActionSaveToDBAsync(UserActionHistory userAction);
     }
 }

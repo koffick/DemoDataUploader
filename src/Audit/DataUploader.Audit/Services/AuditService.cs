@@ -15,8 +15,8 @@ namespace DataUploader.Audit.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-
-        public async Task<Guid> SaveToDBAsync(UserActionHistory userAction)
+        /// <inheritdoc cref="IAuditService.UserActionSaveToDBAsync(UserActionHistory)"/>
+        public async Task<Guid> UserActionSaveToDBAsync(UserActionHistory userAction)
         {
             try
             {

@@ -9,7 +9,7 @@ using DataUploader.Domain.Interfaces;
 namespace DataUploader.Audit.Handlers
 {
     /// <summary>
-    /// Хэндлер сообщений о действиях с файлом.
+    /// Хэндлер сообщений о действиях пользователя.
     /// </summary>
     public class UserActionMessageHandler : BaseEventHandler<UserActionMessage>
     {
@@ -42,13 +42,13 @@ namespace DataUploader.Audit.Handlers
                     var userAction = _mapper.Map<UserActionHistory>(@event, opt => opt.Items["UserRepository"] = userRepository);
                     var businessService =
                         scope.ServiceProvider.GetRequiredService<IAuditService>();
-                    var fileActionId = await businessService.SaveToDBAsync(userAction);
-                    Logger.LogInformation($"Информация о действии с файлом успешно сохранена с ID = {fileActionId}");
+                    var fileActionId = await businessService.UserActionSaveToDBAsync(userAction);
+                    Logger.LogInformation($"Информация о действии пользователя успешно сохранена с ID = {fileActionId}");
                 }
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Ошибка при сохранении информации о действии с файлом {JsonConvert.SerializeObject(@event)}. {ex.Message}", ex);
+                Logger.LogError($"Ошибка при сохранении информации о действии пользователя {JsonConvert.SerializeObject(@event)}. {ex.Message}", ex);
             }
         }
     }
