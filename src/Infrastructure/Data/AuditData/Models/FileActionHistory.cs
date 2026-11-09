@@ -33,7 +33,7 @@ public class FileActionHistory
     /// Дата создания.
     /// </summary>
     [Required]
-    public DateTime SavedDateTime { get; set; } = DateTime.Now;
+    public DateTime SavedDateTime { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Комментарий.

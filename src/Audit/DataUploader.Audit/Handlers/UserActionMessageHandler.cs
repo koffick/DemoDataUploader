@@ -6,7 +6,7 @@ using DataUploader.RabbitMQ.Models;
 using DataUploader.Domain.Models;
 using DataUploader.Domain.Interfaces;
 
-namespace Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers
+namespace DataUploader.Audit.Handlers
 {
     /// <summary>
     /// Хэндлер сообщений о действиях с файлом.

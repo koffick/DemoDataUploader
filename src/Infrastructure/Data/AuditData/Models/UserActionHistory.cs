@@ -49,10 +49,10 @@ public class UserActionHistory
     /// Дата создания.
     /// </summary>
     [Required]
-    public DateTime SavedDateTime { get; set; } = DateTime.Now;
+    public DateTime SavedDateTime { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Комментарий.
     /// </summary>
-    public string Note { get; set; }
+    public string? Note { get; set; }
 }

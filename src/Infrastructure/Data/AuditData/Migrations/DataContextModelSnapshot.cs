@@ -77,7 +77,6 @@ namespace AuditData.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("SavedDateTime")

@@ -86,7 +86,7 @@ namespace Web.Api.Controllers
                     EventId = fileData.EventId,
                     FileId = fileId,
                     FileName = fileData.File.FileName,
-                    EventDate = DateTime.Now,
+                    EventDate = DateTime.UtcNow,
                     ExchangeName = "DataUploader.FileToProccessing",
                     RoutingKey = string.Empty,
                     UserName = userName,

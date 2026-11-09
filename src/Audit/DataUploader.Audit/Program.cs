@@ -1,12 +1,12 @@
 using AutoMapper;
 using DataUploader.Audit.Interfaces;
 using DataUploader.Audit.Services;
-using Itsk.Vma.SPekTR.BusinessAudit.Queue.Handlers;
 using AuditData.Extensions;
 using DataUploader.RabbitMQ.Extensions;
 using DataUploader.RabbitMQ.Models;
 using UserData.Extensions;
 using DataUploader.Audit.Mapper;
+using DataUploader.Audit.Handlers;
 
 const string RABBIT_CONNECTIONS_SECTION = "RabbitMQConnections";
 
