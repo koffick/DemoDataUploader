@@ -29,7 +29,7 @@ namespace DataUploader.Audit.Tests.Services
         }
 
         [Fact]
-        public async Task SaveToDBAsync_IsComplete()
+        public async Task UserActionSaveToDBAsync_IsComplete()
         {
             UserActionHistory userActionHistory = new Fixture().Build<UserActionHistory>()
                 .Without(w => w.Id)
@@ -40,6 +40,20 @@ namespace DataUploader.Audit.Tests.Services
             Assert.NotEqual(res, default);
             Assert.Equal(res, userActionHistory.Id);
             _auditRepository.Verify(v => v.SaveUserActionHistory(userActionHistory), Times.Once);
+        }
+
+        [Fact]
+        public async Task FileActionSaveToDBAsync_IsComplete()
+        {
+            FileActionHistory fileActionHistory = new Fixture().Build<FileActionHistory>()
+                .Without(w => w.Id)
+                .Create();
+            _auditRepository.Setup(s => s.SaveFileActionHistory(It.IsAny<FileActionHistory>()))
+                .Callback<FileActionHistory>(cb => cb.Id = cb.Id ?? Guid.NewGuid());
+            var res = await _auditService.FileActionSaveToDBAsync(fileActionHistory);
+            Assert.NotEqual(res, default);
+            Assert.Equal(res, fileActionHistory.Id);
+            _auditRepository.Verify(v => v.SaveFileActionHistory(fileActionHistory), Times.Once);
         }
     }
 }
