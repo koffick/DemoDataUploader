@@ -52,7 +52,7 @@ services:
       RabbitMQConnections__0__Port: $RABBIT_CONNECTION_PORT
       RabbitMQConnections__0__VirtualHost: $RABBIT_CONNECTION_VIRTUAL_HOST
       RabbitMQConnections__0__UserName: $RABBIT_CONNECTION_WEBAPI_USERNAME
-      RabbitMQConnections__0__Password: $RABBIT_CONNECTION_WBAPI_PASSWORD
+      RabbitMQConnections__0__Password: $RABBIT_CONNECTION_WEBAPI_PASSWORD
       RabbitMQConnections__0__ExchangeName: $RABBIT_CONNECTION_EXCHANGE_FILE_TO_PROCESSING
     depends_on:
       data-downloader-postgres:
@@ -62,6 +62,29 @@ services:
     restart: always
     networks:
       - dd-net     
+
+  data-downloader-audit:
+    container_name: audit
+    build:
+      context: ../..
+      dockerfile: docker/Audit.Dockerfile
+    environment:
+      ConnectionStrings__UserDBConnection: $WEBAPI_USER_DB_CONNECTION
+      ConnectionStrings__AuditDBConnection: $WEBAPI_AUDIT_DB_CONNECTION     
+      RabbitMQConnections__0__Host: $RABBIT_CONNECTION_HOST
+      RabbitMQConnections__0__Port: $RABBIT_CONNECTION_PORT
+      RabbitMQConnections__0__VirtualHost: $RABBIT_CONNECTION_VIRTUAL_HOST
+      RabbitMQConnections__0__UserName: $RABBIT_CONNECTION_AUDIT_USERNAME
+      RabbitMQConnections__0__Password: $RABBIT_CONNECTION_AUDIT_PASSWORD
+      RabbitMQConnections__0__ExchangeName: $RABBIT_CONNECTION_EXCHANGE_AUDIT
+    depends_on:
+      data-downloader-postgres:
+        condition: service_healthy
+    ports:
+      - "5200:8080"
+    restart: always
+    networks:
+      - dd-net  
       
   data-downloader-rabbit:
     container_name: rabbitmq
