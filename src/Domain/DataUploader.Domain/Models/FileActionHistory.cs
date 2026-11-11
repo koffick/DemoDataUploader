@@ -28,7 +28,7 @@ public class FileActionHistory
     /// <summary>
     /// Дата создания.
     /// </summary>
-    public DateTime SavedDateTime { get; set; }
+    public DateTime? SavedDateTime { get; set; }
 
     /// <summary>
     /// Комментарий.

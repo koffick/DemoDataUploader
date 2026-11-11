@@ -25,7 +25,9 @@ builder.Services.AddAuditDataContextDependencies(builder.Configuration);
 builder.Services.AddUserDataContextDependencies(builder.Configuration);
 var connectionCredentials = builder.Configuration.GetSection(RABBIT_CONNECTIONS_SECTION).Get<List<ConnectionCredentials>>();
 builder.Services.AddRabbitMqDependencies(connectionCredentials);
-builder.Services.AddAutoMapper(cfg => { }, typeof(UserActionHistoryAuditProfile));
+builder.Services.AddAutoMapper(cfg => { },
+    typeof(UserActionHistoryAuditProfile),
+    typeof(FileActionHistoryAuditProfile));
 
 builder.Services.AddHostedService(serviceProvider =>
     new UserActionMessageHandler(
@@ -38,6 +40,16 @@ builder.Services.AddHostedService(serviceProvider =>
         )
     );
 
+builder.Services.AddHostedService(serviceProvider =>
+    new FileToProccessMessageHandler(
+        serviceProvider.GetRequiredService<RabbitMQConnectionsWrapper>(),
+        serviceProvider.GetRequiredService<ILogger<FileToProccessMessageHandler>>(),
+        "DataUploader.Audit",
+        "DataUploader.Audit.FileAction",
+        serviceProvider.GetRequiredService<IMapper>(),
+        serviceProvider.GetRequiredService<IServiceProvider>()
+        )
+    );
 
 var app = builder.Build();
 

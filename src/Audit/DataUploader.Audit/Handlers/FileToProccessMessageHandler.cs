@@ -5,6 +5,7 @@ using DataUploader.RabbitMQ.Abstractions;
 using DataUploader.RabbitMQ.Models;
 using DataUploader.Domain.Models;
 using DataUploader.Domain.Interfaces;
+using DataUploader.Domain.Enums;
 
 namespace DataUploader.Audit.Handlers
 {
@@ -37,7 +38,7 @@ namespace DataUploader.Audit.Handlers
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var fileAction = _mapper.Map<FileActionHistory>(@event);
+                    var fileAction = _mapper.Map<FileActionHistory>(@event, opt => opt.Items["ActionType"] = nameof(ActionTypeEnum.FileToProccess));
                     var businessService =
                         scope.ServiceProvider.GetRequiredService<IAuditService>();
                     var fileActionId = await businessService.FileActionSaveToDBAsync(fileAction);
