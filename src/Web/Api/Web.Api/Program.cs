@@ -63,6 +63,7 @@ var connectionCredentials = builder.Configuration.GetSection(RABBIT_CONNECTIONS_
 builder.Services.AddRabbitMqDependencies(connectionCredentials);
 builder.Services.AddUserDataContextDependencies(builder.Configuration);
 builder.Services.AddInfrastructureDependencies(builder.Configuration);
+builder.Services.AddMinioFileStorage(builder.Configuration);
 
 var app = builder.Build();
 

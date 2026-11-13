@@ -54,6 +54,12 @@ services:
       RabbitMQConnections__0__UserName: $RABBIT_CONNECTION_WEBAPI_USERNAME
       RabbitMQConnections__0__Password: $RABBIT_CONNECTION_WEBAPI_PASSWORD
       RabbitMQConnections__0__ExchangeName: $RABBIT_CONNECTION_EXCHANGE_FILE_TO_PROCESSING
+      Minio__Endpoint: $MINIO_ENDPOINT
+      Minio__AccessKey: $MINIO_ROOT_USER
+      Minio__SecretKey: $MINIO_ROOT_PASSWORD
+      Minio__DefaultBucket: $MINIO_DEFAULTBUCKET
+      Minio__UseSsl: $MINIO_USESSL
+      Minio__PresignedUrlExpiryMinutes: $MINIO_PRESIGNEDURLEXPIRYMINUTES
     depends_on:
       data-downloader-postgres:
         condition: service_healthy

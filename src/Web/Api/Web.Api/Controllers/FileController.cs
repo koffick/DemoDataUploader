@@ -3,6 +3,7 @@ using DataUploader.RabbitMQ.Interfaces;
 using DataUploader.RabbitMQ.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Storage.Minio;
 using System.Security.Claims;
 using Web.Api.DTO.Requests;
 using Web.Api.DTO.Responses;
@@ -16,12 +17,12 @@ namespace Web.Api.Controllers
     {
         private ILogger<FileController> _logger;
         private IExcelParser _excelParser;
-        private IFileProvider _fileProvider;
+        private IFileStorageProvider _fileProvider;
         private IProducer _producer;
 
         public FileController(
             IExcelParser excelParser,
-            IFileProvider fileProvider,
+            IFileStorageProvider fileProvider,
             IProducer producer,
             ILogger<FileController> logger)
         {
@@ -77,7 +78,9 @@ namespace Web.Api.Controllers
                     return BadRequest(new ApiFailureResponse(message));
                 }
 
-                var fileId = await _fileProvider.SaveFileAsync(stream, fileData.File.FileName);
+                var fileId = Guid.NewGuid(); 
+                var objectName = string.Join("_", fileId, fileData.File.FileName);
+                await _fileProvider.UploadAsync(objectName, stream);
                 var userName = User?.Claims.FirstOrDefault(f => f.Type == ClaimTypes.Name)?.Value ?? "Пользователь не идентифицирован";
 
                 var eventMessage = new FileToProccessMessage()

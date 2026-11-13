@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Storage.Minio;
 using System.Security.Claims;
 using Web.Api.Controllers;
 using Web.Api.DTO.Responses;
@@ -19,7 +20,7 @@ namespace Web.Api.Tests.Controllers
         private FileController _controller;
         private UploadFileRequestBuilder _builder;
         private Mock<IExcelParser> _excelParser;
-        private Mock<IFileProvider> _fileProvider;
+        private Mock<IFileStorageProvider> _fileProvider;
         private Mock<IProducer> _producer;
         private Mock<ILogger<FileController>> _logger;
 
@@ -27,7 +28,7 @@ namespace Web.Api.Tests.Controllers
         {
             _builder = new UploadFileRequestBuilder();
             _excelParser = new Mock<IExcelParser>();
-            _fileProvider = new Mock<IFileProvider>();
+            _fileProvider = new Mock<IFileStorageProvider>();
             _producer = new Mock<IProducer>();
             _logger = new Mock<ILogger<FileController>>();
             _controller = new FileController(_excelParser.Object, _fileProvider.Object, _producer.Object, _logger.Object);
@@ -39,9 +40,14 @@ namespace Web.Api.Tests.Controllers
             IEnumerable<string> errors = new List<string>();
             _excelParser.Setup(s => s.IsValidate(It.IsAny<Stream>(), out errors, It.IsAny<OperationConfiguration>())).Returns(true);
             var data = _builder.Build(true);
-            var fileId = Guid.NewGuid();
-            _fileProvider.Setup(s => s.SaveFileAsync(It.IsAny<Stream>(), data.File.FileName))
-                .Returns(Task.FromResult(fileId));
+            _fileProvider.Setup(s => s.UploadAsync(
+                It.IsAny<string>(),
+                It.IsAny<Stream>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<IDictionary<string, string>>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
             var userName = Guid.NewGuid().ToString();
             var claims = new List<Claim> { new Claim(ClaimTypes.Name, userName) };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "mock"));
@@ -58,11 +64,18 @@ namespace Web.Api.Tests.Controllers
             var message = (result as OkObjectResult).Value.ToString();
             Assert.Equal("Файл загружен.", message);
             _excelParser.Verify(v => v.IsValidate(It.IsAny<Stream>(), out errors, It.IsAny<OperationConfiguration>()), Times.Once);
-            _fileProvider.Verify(v => v.SaveFileAsync(It.IsAny<Stream>(), data.File.FileName), Times.Once);
+            _fileProvider.Verify(v => v.UploadAsync(
+                It.Is<string>(s => s.Contains(data.File.FileName)),
+                It.IsAny<Stream>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<IDictionary<string, string>>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once);
             _producer.Verify(v => v.PublishAsync(It.Is<FileToProccessMessage>(message =>
                 message.ExchangeName == "DataUploader.FileToProccessing" &&
                 message.FileName == data.File.FileName &&
-                message.FileId == fileId &&
+                message.FileId != default &&
                 message.EventId == data.EventId &&
                 message.EventName == data.EventName &&
                 message.UserName == userName)), Times.Once);
@@ -140,7 +153,14 @@ namespace Web.Api.Tests.Controllers
             IEnumerable<string> errors = new List<string>();
             _excelParser.Setup(s => s.IsValidate(It.IsAny<Stream>(), out errors, It.IsAny<OperationConfiguration>())).Returns(true);
             var errorMessage = Guid.NewGuid().ToString();
-            _fileProvider.Setup(s => s.SaveFileAsync(It.IsAny<Stream>(), It.IsAny<string>())).Throws(new Exception(errorMessage)); ;
+            _fileProvider.Setup(s => s.UploadAsync(
+               It.IsAny<string>(),
+               It.IsAny<Stream>(),
+               It.IsAny<string>(),
+               It.IsAny<string>(),
+               It.IsAny<IDictionary<string, string>>(),
+               It.IsAny<CancellationToken>()))
+               .Throws(new Exception(errorMessage));
             var data = _builder.Build(true);
 
             var result = await _controller.UploadAsync(data);

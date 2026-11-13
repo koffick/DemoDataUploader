@@ -55,6 +55,7 @@ public sealed class MinioFileStorageProvider : IFileStorageProvider
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(objectName);
         ArgumentNullException.ThrowIfNull(stream);
+        stream.Position = 0;
 
         var bucketName = ResolveBucket(bucket);
 
