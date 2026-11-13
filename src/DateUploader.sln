@@ -39,7 +39,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audit", "Audit", "{180E7F16
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUploader.Audit", "Audit\DataUploader.Audit\DataUploader.Audit.csproj", "{303A84BD-3573-4486-9BCD-2417A492E7C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUploader.Audit.Tests", "Tests\DataUploader.Audit.Tests\DataUploader.Audit.Tests.csproj", "{A2D7274A-15A2-424A-B9D4-C15758863EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataUploader.Audit.Tests", "Tests\DataUploader.Audit.Tests\DataUploader.Audit.Tests.csproj", "{A2D7274A-15A2-424A-B9D4-C15758863EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUploader.FileStorage", "Infrastructure\Integrations\DataUploader.FileStorage\DataUploader.FileStorage.csproj", "{F592BEB7-CFE2-4FE1-9BDC-E1C1722D332A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataUploader.FileStorage.Tests", "Tests\DataUploader.FileStorage.Tests\DataUploader.FileStorage.Tests.csproj", "{DDA4F6B6-9B4B-49B9-B9A4-00418D1B0A41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +103,14 @@ Global
 		{A2D7274A-15A2-424A-B9D4-C15758863EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2D7274A-15A2-424A-B9D4-C15758863EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2D7274A-15A2-424A-B9D4-C15758863EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F592BEB7-CFE2-4FE1-9BDC-E1C1722D332A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F592BEB7-CFE2-4FE1-9BDC-E1C1722D332A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F592BEB7-CFE2-4FE1-9BDC-E1C1722D332A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F592BEB7-CFE2-4FE1-9BDC-E1C1722D332A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDA4F6B6-9B4B-49B9-B9A4-00418D1B0A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA4F6B6-9B4B-49B9-B9A4-00418D1B0A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDA4F6B6-9B4B-49B9-B9A4-00418D1B0A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDA4F6B6-9B4B-49B9-B9A4-00418D1B0A41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +129,8 @@ Global
 		{4D4A7A1B-AB33-4A66-B3C6-B42A227A6EEB} = {E3984300-29B4-4B21-879B-8D72A1FDDE34}
 		{303A84BD-3573-4486-9BCD-2417A492E7C4} = {180E7F16-4D1F-4CCA-B469-AA8AEF2DCD68}
 		{A2D7274A-15A2-424A-B9D4-C15758863EF7} = {180E7F16-4D1F-4CCA-B469-AA8AEF2DCD68}
+		{F592BEB7-CFE2-4FE1-9BDC-E1C1722D332A} = {FEBEA56E-5E26-4990-8735-EA0E52DB3DBA}
+		{DDA4F6B6-9B4B-49B9-B9A4-00418D1B0A41} = {FEBEA56E-5E26-4990-8735-EA0E52DB3DBA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71F65A80-B12F-4A32-AB98-7489E4C069D3}
