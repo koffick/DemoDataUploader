@@ -6,6 +6,7 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASS
       POSTGRES_AUDIT_PASS: $POSTGRES_AUDIT_PASS
       POSTGRES_USER_PASS: $POSTGRES_USER_PASS
+      POSTGRES_DATA_PASS: $POSTGRES_DATA_PASS
       PGDATA: /var/lib/postgresql/data/pgdata
     build:
       context: ../..
