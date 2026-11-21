@@ -1,5 +1,6 @@
 ﻿using DestinationData.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace DestinationData
 {
@@ -19,6 +20,22 @@ namespace DestinationData
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(SchemeName);
+
+            modelBuilder.Entity<Field>()
+                .Property(e => e.Id)
+                .HasValueGenerator<GuidValueGenerator>();
+
+            modelBuilder.Entity<Organization>()
+                .Property(e => e.Id)
+                .HasValueGenerator<GuidValueGenerator>();
+
+            modelBuilder.Entity<Well>()
+                .Property(e => e.Id)
+                .HasValueGenerator<GuidValueGenerator>();
+
+            modelBuilder.Entity<TechMode>()
+                .Property(e => e.Id)
+                .HasValueGenerator<GuidValueGenerator>();
 
             base.OnModelCreating(modelBuilder);
         }

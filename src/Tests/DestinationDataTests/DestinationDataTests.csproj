@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Domain\DataUploader.Domain\DataUploader.Domain.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Data\DestinationData\DestinationData.csproj" />
   </ItemGroup>
 
