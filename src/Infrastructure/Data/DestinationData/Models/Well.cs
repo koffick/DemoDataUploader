@@ -28,10 +28,14 @@ namespace DestinationData.Models
         /// </summary>
         public Guid FieldId { get; set; }
 
+        public Field Field { get; set; }
+
         /// <summary>
         /// Идентификатор ответственной организации.
         /// </summary>
         public Guid OrgId { get; set; }
+
+        public Organization Organization { get; set; }
 
         /// <summary>
         /// Куст

@@ -22,6 +22,6 @@ namespace DestinationData.Models
         /// <summary>
         /// Код.
         /// </summary>
-        public string OrgCode { get; set; }
+        public string? OrgCode { get; set; }
     }
 }

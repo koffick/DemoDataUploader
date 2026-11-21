@@ -25,6 +25,8 @@ namespace DestinationData.Models
         [Required]
         public Guid WellId { get; set; }
 
+        public Well Well { get; set; }
+
         /// <summary>
         /// Тип скважины
         /// </summary>

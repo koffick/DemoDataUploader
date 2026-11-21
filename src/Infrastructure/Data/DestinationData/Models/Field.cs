@@ -1,4 +1,6 @@
-﻿namespace DestinationData.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DestinationData.Models
 {
     /// <summary>
     /// Модель месторождения.
@@ -8,6 +10,7 @@
         /// <summary>
         /// Bидентификатор месторождения.
         /// </summary>
+        [Key]
         public Guid Id { get; set; }
 
         /// <summary>
